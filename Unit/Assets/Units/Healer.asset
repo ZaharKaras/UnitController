@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7e28092a7633d4babebb9848ddced7, type: 3}
+  m_Name: Healer
+  m_EditorClassIdentifier: 
+  isPlayerUnit: 0
+  type: 2
+  name: 
+  playerPrefabs: {fileID: 6534573388650280370, guid: 754c7d98e82c8cb409fb1ffe65aeff40,
+    type: 3}
+  enemyPrefabs: {fileID: 2667820570553642621, guid: ef27060cb3147324a9173c585ea01ff0,
+    type: 3}
+  cost: 0
+  damage: 0
+  hp: 0
+  armor: 0
