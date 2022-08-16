@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 557347300861240483}
   - component: {fileID: 3607341383560842934}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Highlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 6551366540266539918}
   - component: {fileID: 2349902826078747184}
   - component: {fileID: 503745488639224176}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: enemyUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}

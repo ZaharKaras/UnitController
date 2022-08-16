@@ -70,6 +70,36 @@ public class InputHandler : MonoBehaviour
             }
             isDragging = false;
         }
+
+        if(Input.GetMouseButtonDown(1) && HaveSelectedUnits())
+        {
+            //create a ray
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //check if we hit something
+            if (Physics.Raycast(ray, out hit))
+            {
+                //if we do, then do somehting with that dat
+                LayerMask layerHit = hit.transform.gameObject.layer;
+
+                switch (layerHit.value)
+                {
+                    case 8: // Units layer
+                        //do something
+                        break;
+                    case 9://enemy unit
+                        //attack
+                        break;
+                    default: // if nothing happens
+                        //do something
+                        foreach(Transform unit in selectedUnits)
+                        {
+                            PlayerUnit playerUnit = unit.gameObject.GetComponent<PlayerUnit>();
+                            playerUnit.MoveUnit(hit.point);
+                        }
+                        break;
+                }
+            }
+        }
     }
 
     private void SelectUnit(Transform unit, bool canMultiselect)
@@ -104,5 +134,13 @@ public class InputHandler : MonoBehaviour
         Camera camera = Camera.main;
         Bounds vpBounds = MultiSelect.GetViewPointBounds(camera, mousePosition, Input.mousePosition);
         return vpBounds.Contains(camera.WorldToViewportPoint(tf.position));
+    }
+
+    private bool HaveSelectedUnits()
+    {
+        if (selectedUnits.Count > 0)
+            return true;
+
+        return false;
     }
 }
