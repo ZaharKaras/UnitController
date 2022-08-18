@@ -24,7 +24,7 @@ public class PlayerUnit : MonoBehaviour
 
     public void Start()
     {
-        currentHealth = baseStats.hp;
+        currentHealth = baseStats.hp + baseStats.armor;
     }
 
     private void Update()
@@ -39,7 +39,7 @@ public class PlayerUnit : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        float totalDamage = damage - baseStats.armor;
+        float totalDamage = (damage);
         currentHealth -= totalDamage;
     }
 
@@ -49,7 +49,7 @@ public class PlayerUnit : MonoBehaviour
         unitStatDisplay.transform.LookAt(unitStatDisplay.transform.position + camera.transform.rotation * Vector3.forward, 
             camera.transform.rotation * Vector3.up);
 
-        healthBarAmount.fillAmount = currentHealth / baseStats.hp;
+        healthBarAmount.fillAmount = currentHealth / (baseStats.hp + baseStats.armor);
 
         if(currentHealth <= 0)
         {

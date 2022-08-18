@@ -101,7 +101,7 @@ public class EnemyUnit : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        float totalDamage = damage = baseStats.armor;
+        float totalDamage = damage - baseStats.armor;
         currentHealth -= totalDamage;
     }
 
@@ -111,7 +111,7 @@ public class EnemyUnit : MonoBehaviour
         unitStatDisplay.transform.LookAt(unitStatDisplay.transform.position + camera.transform.rotation * Vector3.forward,
             camera.transform.rotation * Vector3.up);
 
-        healthBarAmount.fillAmount = currentHealth / baseStats.hp;
+        healthBarAmount.fillAmount = currentHealth / (baseStats.hp + baseStats.armor);
 
         if (currentHealth <= 0)
         {
