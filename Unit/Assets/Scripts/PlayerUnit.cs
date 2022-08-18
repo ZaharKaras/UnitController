@@ -8,6 +8,7 @@ public class PlayerUnit : MonoBehaviour
 {
     private NavMeshAgent navAgent;
 
+    public UnitStatType.Base baseStats;
     public void OnEnable()
     {
         navAgent = GetComponent<NavMeshAgent>();

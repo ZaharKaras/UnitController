@@ -12,8 +12,8 @@ public class Unit : ScriptableObject
         Healer
     }
 
-    public bool isPlayerUnit;
-
+    [Space(15)]
+    [Header("Unit settings")]
     public unitType type;
 
     public new string name;
@@ -21,8 +21,10 @@ public class Unit : ScriptableObject
     public GameObject playerPrefabs;
     public GameObject enemyPrefabs;
 
-    public int cost;
-    public int damage;
-    public int hp;
-    public int armor;
+    [Space(15)]
+    [Header("Unit stats")]
+    [Space(40)]
+
+    public UnitStatType.Base baseStats;
+
 }

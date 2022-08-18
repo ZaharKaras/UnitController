@@ -13,6 +13,11 @@ public class InputHandler : MonoBehaviour
     private bool isDragging = false;
 
     private Vector3 mousePosition;
+
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         instance = this;

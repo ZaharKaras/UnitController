@@ -7,9 +7,16 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance;
 
     public Transform playerUnits;
-    void Start()
+    public Transform enemyUnits;
+
+    private void Awake()
     {
         instance = this;
+    }
+    void Start()
+    {
+        UnitHandler.instance.SetBasicUnitStats(playerUnits);
+        UnitHandler.instance.SetBasicUnitStats(enemyUnits);
     }
 
     void Update()
