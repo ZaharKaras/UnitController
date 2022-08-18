@@ -7,7 +7,7 @@ public class UnitStatType : ScriptableObject
     [System.Serializable]
     public class Base
     {
-        public float cost, aggroRange, attackRange, damage, hp, armor;
+        public float cost, aggroRange, attackSpeed,attackRange, damage, hp, armor;
     }
 
 

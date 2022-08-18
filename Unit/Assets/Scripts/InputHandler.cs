@@ -8,7 +8,7 @@ public class InputHandler : MonoBehaviour
 
     private RaycastHit hit; //what we hit with out ray
 
-    private List<Transform> selectedUnits = new List<Transform>();
+    public List<Transform> selectedUnits = new List<Transform>();
 
     private bool isDragging = false;
 

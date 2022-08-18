@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyUnit : MonoBehaviour
@@ -14,25 +15,44 @@ public class EnemyUnit : MonoBehaviour
 
     private Transform aggroTarget;
 
+    private PlayerUnit aggroUnit;
+
     private bool hasAggro = false;
 
     private float distance;
 
+    public GameObject unitStatDisplay;
+
+    public Image healthBarAmount;
+
+    public float currentHealth;
+
+    private float attackCooldown;
+
     private void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
+        currentHealth = baseStats.hp;
     }
 
     private void Update()
     {
+        attackCooldown -= Time.deltaTime;
+
         if(!hasAggro)
         {
             CheckForEnemyTargets();
         }
         if(hasAggro)
         {
+            Attack();
             MoveToAggroTarget();
         }
+    }
+
+    private void LateUpdate()
+    {
+        HandleHealth();
     }
 
     private void CheckForEnemyTargets()
@@ -44,19 +64,64 @@ public class EnemyUnit : MonoBehaviour
             if(rangeColliders[i].gameObject.layer == UnitHandler.instance.pUnitLayer)
             {
                 aggroTarget = rangeColliders[i].gameObject.transform;
+                aggroUnit = aggroTarget.gameObject.GetComponent<PlayerUnit>();
                 hasAggro = true;
+                break;
             }
+        }
+    }
+
+    private void Attack()
+    {
+        if(attackCooldown <= 0 && distance <= baseStats.aggroRange + 1)
+        {
+            aggroUnit.TakeDamage(baseStats.damage);
+            attackCooldown = baseStats.attackSpeed;
         }
     }
 
     private void MoveToAggroTarget()
     {
-        distance = Vector3.Distance(aggroTarget.position, transform.position);
-        navAgent.stoppingDistance = (baseStats.attackRange + 1);
-
-        if(distance <= baseStats.aggroRange)
+        if(aggroTarget == null)
         {
-            navAgent.SetDestination(aggroTarget.position);
+            navAgent.SetDestination(transform.position);
+            hasAggro = false;
         }
+        else
+        {
+            distance = Vector3.Distance(aggroTarget.position, transform.position);
+            navAgent.stoppingDistance = (baseStats.attackRange + 1);
+
+            if (distance <= baseStats.aggroRange)
+            {
+                navAgent.SetDestination(aggroTarget.position);
+            }
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        float totalDamage = damage = baseStats.armor;
+        currentHealth -= totalDamage;
+    }
+
+    private void HandleHealth()
+    {
+        Camera camera = Camera.main;
+        unitStatDisplay.transform.LookAt(unitStatDisplay.transform.position + camera.transform.rotation * Vector3.forward,
+            camera.transform.rotation * Vector3.up);
+
+        healthBarAmount.fillAmount = currentHealth / baseStats.hp;
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        InputHandler.instance.selectedUnits.Remove(gameObject.transform);
+        Destroy(gameObject);
     }
 }

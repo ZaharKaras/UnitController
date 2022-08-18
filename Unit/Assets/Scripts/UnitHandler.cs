@@ -22,7 +22,7 @@ public class UnitHandler : MonoBehaviour
         pUnitLayer = LayerMask.NameToLayer("playerUnits");
     }
 
-    public (float cost, float aggroRange,float damage, float attackRange, float hp, float armor) GetBasicUnitStats(string type)
+    public UnitStatType.Base GetBasicUnitStats(string type)
     {
         Unit unit;
         switch (type)
@@ -38,10 +38,10 @@ public class UnitHandler : MonoBehaviour
                 break;
             default:
                 Debug.Log($"Unit Type:{type} could not be found or dows not exist");
-                return (0, 0, 0, 0, 0, 0);
+                return null;
                 break;
         }
-        return (unit.baseStats.cost, unit.baseStats.aggroRange,unit.baseStats.damage, unit.baseStats.attackRange, unit.baseStats.hp, unit.baseStats.armor);
+        return unit.baseStats; //return whole class
     }
 
     public void SetBasicUnitStats(Transform type)
@@ -54,30 +54,17 @@ public class UnitHandler : MonoBehaviour
             foreach(Transform unit in child)
             {
                 string unitName = child.name.Substring(0, child.name.Length - 1).ToLower();
-                var stats = GetBasicUnitStats(unitName);
                 
                 if (type == pUnits)
                 {
                     PlayerUnit pU = unit.GetComponent<PlayerUnit>();
-                    //set unit stats in each unit
-                    pU.baseStats.cost = stats.cost;
-                    pU.baseStats.aggroRange = stats.aggroRange;
-                    pU.baseStats.damage = stats.damage;
-                    pU.baseStats.attackRange = stats.attackRange;
-                    pU.baseStats.hp = stats.hp;
-                    pU.baseStats.armor = stats.armor;
+                    pU.baseStats = GetBasicUnitStats(unitName);
                 }
                 else if(type == eUnits)
                 {
                     //set enemy stats
                     EnemyUnit eU = unit.GetComponent<EnemyUnit>();
-                    //set unit stats in each unit
-                    eU.baseStats.cost = stats.cost;
-                    eU.baseStats.aggroRange = stats.aggroRange;
-                    eU.baseStats.damage = stats.damage;
-                    eU.baseStats.attackRange = stats.attackRange;
-                    eU.baseStats.hp = stats.hp;
-                    eU.baseStats.armor = stats.armor;
+                    eU.baseStats = GetBasicUnitStats(unitName);
                 }
              
 

@@ -12,11 +12,12 @@ public class PlayerManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        UnitHandler.instance.SetBasicUnitStats(playerUnits);
+        UnitHandler.instance.SetBasicUnitStats(enemyUnits);
     }
     void Start()
     {
-        UnitHandler.instance.SetBasicUnitStats(playerUnits);
-        UnitHandler.instance.SetBasicUnitStats(enemyUnits);
+        
     }
 
     void Update()
