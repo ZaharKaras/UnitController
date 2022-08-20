@@ -215,13 +215,14 @@ MonoBehaviour:
   baseStats:
     cost: 0
     aggroRange: 0
+    attackSpeed: 0
     attackRange: 0
     damage: 0
     hp: 0
     armor: 0
   unitStatDisplay: {fileID: 3815006486653812554}
   healthBarAmount: {fileID: 17686522525232148}
-  healthBarPercent: 0
+  currentHealth: 0
 --- !u!1001 &7308258117557562518
 PrefabInstance:
   m_ObjectHideFlags: 0

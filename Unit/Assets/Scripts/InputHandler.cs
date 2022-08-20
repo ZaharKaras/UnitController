@@ -93,6 +93,11 @@ public class InputHandler : MonoBehaviour
                         break;
                     case 9://enemy unit
                         //attack
+                        foreach(var unit in selectedUnits)
+                        {
+                            PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
+                            //do something
+                        }
                         break;
                     default: // if nothing happens
                         //do something

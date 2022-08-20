@@ -38,7 +38,7 @@ public class UnitHandler : MonoBehaviour
                 break;
             default:
                 Debug.Log($"Unit Type:{type} could not be found or dows not exist");
-                return null;
+                unit = null;
                 break;
         }
         return unit.baseStats; //return whole class

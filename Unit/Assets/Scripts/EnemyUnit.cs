@@ -29,25 +29,28 @@ public class EnemyUnit : MonoBehaviour
 
     private float attackCooldown;
 
-    private void Start()
+
+    private void OnEnable()
     {
         navAgent = GetComponent<NavMeshAgent>();
-        currentHealth = baseStats.hp;
+    }
+    private void Start()
+    {
+        currentHealth = baseStats.hp + baseStats.armor;
     }
 
     private void Update()
     {
         attackCooldown -= Time.deltaTime;
-
         if(!hasAggro)
         {
             CheckForEnemyTargets();
         }
         if(hasAggro)
         {
-            Attack();
             MoveToAggroTarget();
         }
+        
     }
 
     private void LateUpdate()
@@ -89,19 +92,27 @@ public class EnemyUnit : MonoBehaviour
         }
         else
         {
+
             distance = Vector3.Distance(aggroTarget.position, transform.position);
             navAgent.stoppingDistance = (baseStats.attackRange + 1);
+
 
             if (distance <= baseStats.aggroRange)
             {
                 navAgent.SetDestination(aggroTarget.position);
             }
+            if(distance <= baseStats.attackRange + 1)
+            {
+                navAgent.SetDestination(transform.position);
+                Attack();
+            }
+
         }
     }
 
     public void TakeDamage(float damage)
     {
-        float totalDamage = damage - baseStats.armor;
+        float totalDamage = damage;
         currentHealth -= totalDamage;
     }
 

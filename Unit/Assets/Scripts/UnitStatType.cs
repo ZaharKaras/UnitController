@@ -10,5 +10,4 @@ public class UnitStatType : ScriptableObject
         public float cost, aggroRange, attackSpeed,attackRange, damage, hp, armor;
     }
 
-
 }

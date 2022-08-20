@@ -15,10 +15,6 @@ public class PlayerManager : MonoBehaviour
         UnitHandler.instance.SetBasicUnitStats(playerUnits);
         UnitHandler.instance.SetBasicUnitStats(enemyUnits);
     }
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
