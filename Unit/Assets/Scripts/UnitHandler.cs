@@ -13,7 +13,6 @@ public class UnitHandler : MonoBehaviour
     private void Awake()
     {
         instance = this;
-
     }
 
     private void Start()
@@ -38,9 +37,9 @@ public class UnitHandler : MonoBehaviour
                 break;
             default:
                 Debug.Log($"Unit Type:{type} could not be found or dows not exist");
-                unit = null;
-                break;
+                return null;
         }
+
         return unit.baseStats; //return whole class
     }
 

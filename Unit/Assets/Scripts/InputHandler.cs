@@ -18,11 +18,7 @@ public class InputHandler : MonoBehaviour
     {
         instance = this;
     }
-    void Start()
-    {
-        instance = this;
-    }
-
+   
     private void OnGUI()
     {
         if(isDragging)
@@ -92,12 +88,15 @@ public class InputHandler : MonoBehaviour
                         //do something
                         break;
                     case 9://enemy unit
-                        //attack
-                        foreach(var unit in selectedUnits)
+                           //attack
+                        hit.transform.Find("Highlight").gameObject.SetActive(true);
+
+                        foreach (var unit in selectedUnits)
                         {
                             PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
-                            //do something
+                            pU.MoveToAttack(hit.transform);
                         }
+
                         break;
                     default: // if nothing happens
                         //do something

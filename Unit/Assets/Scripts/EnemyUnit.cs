@@ -42,6 +42,7 @@ public class EnemyUnit : MonoBehaviour
     private void Update()
     {
         attackCooldown -= Time.deltaTime;
+
         if(!hasAggro)
         {
             CheckForEnemyTargets();

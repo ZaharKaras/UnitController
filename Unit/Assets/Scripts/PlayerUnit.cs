@@ -21,15 +21,17 @@ public class PlayerUnit : MonoBehaviour
 
     private Collider[] rangeColliders;
 
-    private Transform aggroTarget;
+    public Transform aggroTarget;
 
-    private EnemyUnit aggroUnit;
+    public EnemyUnit aggroUnit;
 
-    private bool hasAggro = false;
+    public bool hasAggro = false;
 
     private float distance;
 
     private Vector3 newPosition;
+
+    private bool isControlled;
     
 
     public void OnEnable()
@@ -47,9 +49,8 @@ public class PlayerUnit : MonoBehaviour
     {
         attackCooldown -= Time.deltaTime;
 
-        if (Vector3.Distance(newPosition, transform.position) <= 1.5)
+        if (Vector3.Distance(newPosition, transform.position) <= 1.5 || isControlled)
         {
-
             if (!hasAggro)
             {
                 CheckForEnemyTargets();
@@ -60,12 +61,16 @@ public class PlayerUnit : MonoBehaviour
             }
         }
 
-        Debug.Log(Vector3.Distance(newPosition, transform.position));
+        //Debug.Log(Vector3.Distance(newPosition, transform.position));
     }
 
     private void LateUpdate()
     {
         HandleHealth();
+
+        if (aggroUnit == null)
+            isControlled = false;
+            
     }
 
     private void CheckForEnemyTargets()
@@ -93,6 +98,17 @@ public class PlayerUnit : MonoBehaviour
         }
     }
 
+    public void MoveToAttack(Transform _aggroTarget)
+    {
+        newPosition = _aggroTarget.position;
+        aggroTarget = _aggroTarget;
+        aggroUnit = aggroTarget.gameObject.GetComponent<EnemyUnit>();
+        hasAggro = true;
+        isControlled = true;
+
+        MoveToAggroTarget();
+    }
+
     private void MoveToAggroTarget()
     {
         if (aggroTarget == null)
@@ -102,11 +118,11 @@ public class PlayerUnit : MonoBehaviour
         }
         else
         {
-
             distance = Vector3.Distance(aggroTarget.position, transform.position);
             navAgent.stoppingDistance = (baseStats.attackRange + 1);
-
-            if (distance <= baseStats.aggroRange)
+            //Debug.Log("Distance: " + distance);
+            
+            if (distance <= baseStats.aggroRange || isControlled)
             {
                 navAgent.SetDestination(aggroTarget.position);
             }
