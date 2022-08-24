@@ -110,18 +110,27 @@ public class InputHandler : MonoBehaviour
                             pU.MoveToAttack(hit.transform);
                             pU.isControlled = true;
                         }
+                        break;
+                    case 10: //minerals
 
+                        hit.transform.Find("Highlight").gameObject.SetActive(true);
+
+                        for (int i = 0; i < selectedUnits.Count; i++)
+                        {
+                            PlayerUnit pU = selectedUnits[i].gameObject.GetComponent<PlayerUnit>();
+                            pU.isGathered = true;
+                        }
+                        
                         break;
                     default: // if nothing happens
                         var position = GetPointPosition(selectedUnits.Count);
-
+                        
                         for(int i = 0; i < selectedUnits.Count; i++)
                         {
                             PlayerUnit pU = selectedUnits[i].gameObject.GetComponent<PlayerUnit>();
                             pU.MoveUnit(hit.point + (position[i] * ((selectedUnits.Count)/(Mathf.PI))));
                         }
-
-                        foreach(Transform unit in selectedUnits)
+                        foreach (Transform unit in selectedUnits)
                         {
                             PlayerUnit pU = unit.gameObject.GetComponent<PlayerUnit>();
                             //pU.MoveUnit(hit.point);

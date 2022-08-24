@@ -20,12 +20,18 @@ public class PlayerUnit : MonoBehaviour
     private Vector3 newPosition;
     public bool isControlled;
 
+    public int minerals;
+    public Transform storage;
+    public Transform mine;
+    public bool isGathered;
+
     public void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
         currentHealth = stats.hp + stats.armor;
         newPosition = transform.position;
         navAgent.speed = stats.speed;
+        isGathered = false;
 
         //var bounds = GetComponent<MeshFilter>().sharedMesh.bounds.size.x;
         //Debug.Log(bounds);
@@ -45,9 +51,36 @@ public class PlayerUnit : MonoBehaviour
             {
                 MoveToAggroTarget();
             }
+
+            if (isGathered)
+            {
+                if(minerals > 0)
+                {
+                    DeliverMinerals();
+                }
+                else if(minerals == 0)
+                {
+                    GatherMinerals();
+                }
+            }
         }
 
-        //Debug.Log(Vector3.Distance(newPosition, transform.position));
+       
+    }
+
+    private void FixedUpdate()
+    {
+        if (isGathered)
+        {
+            if (minerals > 0)
+            {
+                DeliverMinerals();
+            }
+            else if (minerals == 0)
+            {
+                GatherMinerals();
+            }
+        }
     }
 
     private void LateUpdate()
@@ -70,6 +103,7 @@ public class PlayerUnit : MonoBehaviour
                 aggroTarget = rangeColliders[i].gameObject.transform;
                 aggroUnit = aggroTarget.gameObject.GetComponent<EnemyUnit>();
                 hasAggro = true;
+                isGathered = false;
                 break;
             }
         }
@@ -90,6 +124,7 @@ public class PlayerUnit : MonoBehaviour
         aggroTarget = _aggroTarget;
         aggroUnit = aggroTarget.gameObject.GetComponent<EnemyUnit>();
         hasAggro = true;
+        isGathered=false;
 
         MoveToAggroTarget();
     }
@@ -123,6 +158,7 @@ public class PlayerUnit : MonoBehaviour
     {
         navAgent.SetDestination(_destination);
         newPosition = _destination;
+        isGathered = false;
     }
 
     public void TakeDamage(float damage)
@@ -149,5 +185,38 @@ public class PlayerUnit : MonoBehaviour
     {
         InputHandler.instance.selectedUnits.Remove(gameObject.transform);
         Destroy(gameObject);
+    }
+
+    private void GatherMinerals()
+    {
+        if (Vector3.Distance(mine.position, transform.position) <= 2)
+        {
+            Debug.Log("gather");
+
+            navAgent.SetDestination(transform.position);
+            Mine _mine = mine.gameObject.GetComponent<Mine>();
+            minerals = _mine.GetMinerals();
+        }
+        else
+        {
+            navAgent.SetDestination(mine.position);
+        }
+    }
+
+    private void DeliverMinerals()
+    {
+        if (Vector3.Distance(transform.position, storage.position) <= 2)
+        {
+            Debug.Log("delivery");
+
+            navAgent.SetDestination(transform.position);
+            Building _storage = storage.gameObject.GetComponent<Building>();
+            _storage.TakeMinerals(minerals);
+            minerals = 0;
+        }
+        else
+        {
+            navAgent.SetDestination(storage.position);
+        }
     }
 }
