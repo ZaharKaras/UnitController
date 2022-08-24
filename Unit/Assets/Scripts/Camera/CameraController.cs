@@ -17,6 +17,8 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         Vector3 pos = transform.position;
+        Vector3 scroolPos = pos;
+
 
         if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
         {
@@ -39,7 +41,8 @@ public class CameraController : MonoBehaviour
         pos.y -= scroll * scrollSpeed * Time.deltaTime * 100f;
 
         pos.x = Mathf.Clamp(pos.x, -panLimint.x, panLimint.x);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
+        scroolPos.y = Mathf.Clamp(pos.y, minY, maxY);
+        pos.y = Mathf.Clamp(pos.y, 5, 30);
         pos.z = Mathf.Clamp (pos.z, -panLimint.y, panLimint.y);
 
         transform.position = pos;

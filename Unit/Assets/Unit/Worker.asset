@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7e28092a7633d4babebb9848ddced7, type: 3}
+  m_Name: Worker
+  m_EditorClassIdentifier: 
+  type: 0
+  name: 
+  playerPrefabs: {fileID: 6534573388650280370, guid: 99e3b033348bc994aa46b48aa1f233a2,
+    type: 3}
+  enemyPrefabs: {fileID: 2667820570553642621, guid: d1196f12280c3044b9172e2bf7213b69,
+    type: 3}
+  baseStats:
+    cost: 50
+    aggroRange: 10
+    attackSpeed: 1
+    attackRange: 1
+    damage: 10
+    hp: 50
+    armor: 0
+    speed: 5
