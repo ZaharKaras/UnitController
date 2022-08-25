@@ -51,35 +51,14 @@ public class PlayerUnit : MonoBehaviour
             {
                 MoveToAggroTarget();
             }
-
-            if (isGathered)
-            {
-                if(minerals > 0)
-                {
-                    DeliverMinerals();
-                }
-                else if(minerals == 0)
-                {
-                    GatherMinerals();
-                }
-            }
         }
-
-       
     }
 
     private void FixedUpdate()
     {
         if (isGathered)
         {
-            if (minerals > 0)
-            {
-                DeliverMinerals();
-            }
-            else if (minerals == 0)
-            {
-                GatherMinerals();
-            }
+            GatherMinerals();
         }
     }
 
@@ -189,34 +168,82 @@ public class PlayerUnit : MonoBehaviour
 
     private void GatherMinerals()
     {
-        if (Vector3.Distance(mine.position, transform.position) <= 2)
-        {
-            Debug.Log("gather");
+        
 
-            navAgent.SetDestination(transform.position);
-            Mine _mine = mine.gameObject.GetComponent<Mine>();
-            minerals = _mine.GetMinerals();
+        if(minerals > 0)
+        {
+            if (storage == null)
+                FindNearStorage();
+
+            Invoke("DeliverMinerals", 2f);
         }
         else
         {
-            navAgent.SetDestination(mine.position);
+            if (mine == null)
+            {
+                isGathered = false;
+                return;
+            }
+
+            if (Vector3.Distance(mine.position, transform.position) <= 2)
+            {
+                Debug.Log("gather");
+
+                navAgent.SetDestination(transform.position);
+                Mine _mine = mine.gameObject.GetComponent<Mine>();
+                minerals = _mine.GetMinerals();
+            }
+            else
+            {
+                navAgent.SetDestination(mine.position);
+            }
         }
+
+    }
+
+    private void FindNearStorage()
+    {
+        GameObject[] storages = GameObject.FindGameObjectsWithTag("Storage");
+        List<float> distances = new List<float>();
+
+        foreach(var stor in storages)
+        {
+            Transform storTransform = stor.transform;
+            distances.Add(Vector3.Distance(storTransform.position, transform.position));
+        }
+
+        int minIndex = 0;
+        for(int i = 0; i < distances.Count; i++)
+        {
+            if(distances[minIndex] >= distances[i])
+                minIndex = i;
+        }
+
+        storage = storages[minIndex].transform;
     }
 
     private void DeliverMinerals()
     {
-        if (Vector3.Distance(transform.position, storage.position) <= 2)
+        if(minerals == 0)
         {
-            Debug.Log("delivery");
-
-            navAgent.SetDestination(transform.position);
-            Building _storage = storage.gameObject.GetComponent<Building>();
-            _storage.TakeMinerals(minerals);
-            minerals = 0;
+            GatherMinerals();
         }
         else
         {
-            navAgent.SetDestination(storage.position);
+            if (Vector3.Distance(transform.position, storage.position) <= 2)
+            {
+                Debug.Log("delivery");
+
+                navAgent.SetDestination(transform.position);
+                Building _storage = storage.gameObject.GetComponent<Building>();
+                _storage.TakeMinerals(minerals);
+                minerals = 0;
+            }
+            else
+            {
+                navAgent.SetDestination(storage.position);
+            }
         }
+
     }
 }

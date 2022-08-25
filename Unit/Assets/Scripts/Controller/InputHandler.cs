@@ -10,6 +10,8 @@ public class InputHandler : MonoBehaviour
 
     public List<Transform> selectedUnits = new List<Transform>();
 
+    public Transform selectedBuilding;
+
     private bool isDragging = false;
 
     private Vector3 mousePosition;
@@ -29,18 +31,7 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    public Vector3[] GetPointPosition(int count)
-    {
-        float step = Mathf.PI * 2 / count;
-        List<Vector3> points = new List<Vector3>();
-
-        for(var i = 0; i < count; i++)
-        {
-            points.Add(new Vector3(Mathf.Sin(i * step), 0f, Mathf.Cos(i * step)));
-        }
-
-        return points.ToArray();
-    }
+   
     public void HandleUnitMovement()
     {
         if(Input.GetMouseButtonDown(0))
@@ -60,10 +51,22 @@ public class InputHandler : MonoBehaviour
                         //do something
                         SelectUnit(hit.transform, Input.GetKey(KeyCode.LeftShift));
                         break;
+                    case 10: // Minerals
+                        selectedBuilding = hit.transform;
+                        selectedBuilding.gameObject.SetActive(true);
+                        break;
+                    case 11: // Storage Building
+                        selectedBuilding = hit.transform;
+                        selectedBuilding.gameObject.SetActive(true);
+                        break;
                     default: // if nothing happens
                         //do something
                         isDragging = true;
                         DeselectUnits();
+                        if(selectedBuilding != null)
+                        {
+                            selectedBuilding.gameObject.SetActive(false);
+                        }
                         break;
                 }
             }
@@ -119,6 +122,7 @@ public class InputHandler : MonoBehaviour
                         {
                             PlayerUnit pU = selectedUnits[i].gameObject.GetComponent<PlayerUnit>();
                             pU.isGathered = true;
+                            pU.mine = hit.transform;
                         }
                         
                         break;
@@ -186,5 +190,18 @@ public class InputHandler : MonoBehaviour
             return true;
 
         return false;
+    }
+
+    public Vector3[] GetPointPosition(int count)
+    {
+        float step = Mathf.PI * 2 / count;
+        List<Vector3> points = new List<Vector3>();
+
+        for (var i = 0; i < count; i++)
+        {
+            points.Add(new Vector3(Mathf.Sin(i * step), 0f, Mathf.Cos(i * step)));
+        }
+
+        return points.ToArray();
     }
 }
