@@ -31,7 +31,12 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-   
+    private void Update()
+    {
+        
+    }
+
+
     public void HandleUnitMovement()
     {
         if(Input.GetMouseButtonDown(0))
@@ -156,10 +161,13 @@ public class InputHandler : MonoBehaviour
         {
             DeselectUnits();
         }
+        if(selectedUnits.Count < 10)
+        {
+            selectedUnits.Add(unit);
+            //set an obj on the unit clled Highlight
+            unit.Find("Highlight").gameObject.SetActive(true);
+        }
         
-        selectedUnits.Add(unit);
-        //set an obj on the unit clled Highlight
-        unit.Find("Highlight").gameObject.SetActive(true);
     }
 
     private void DeselectUnits()

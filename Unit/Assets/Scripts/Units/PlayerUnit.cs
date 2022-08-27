@@ -25,6 +25,8 @@ public class PlayerUnit : MonoBehaviour
     public Transform mine;
     public bool isGathered;
 
+    private Projectile projectilePrefab;
+
     public void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
@@ -32,9 +34,7 @@ public class PlayerUnit : MonoBehaviour
         newPosition = transform.position;
         navAgent.speed = stats.speed;
         isGathered = false;
-
-        //var bounds = GetComponent<MeshFilter>().sharedMesh.bounds.size.x;
-        //Debug.Log(bounds);
+        projectilePrefab = transform.Find("Projectile").gameObject.GetComponent<Projectile>();
     }
 
     private void Update()
@@ -60,6 +60,14 @@ public class PlayerUnit : MonoBehaviour
         {
             GatherMinerals();
         }
+
+        //if(aggroTarget != null)
+        //{
+        //    Vector3 fromTo = aggroTarget.position - transform.position;
+        //    Vector3 fromToXZ = new Vector3(fromTo.x, 0f, fromTo.z);
+
+        //    transform.rotation = Quaternion.LookRotation(fromToXZ, Vector3.up);
+        //}
     }
 
     private void LateUpdate()
@@ -94,6 +102,9 @@ public class PlayerUnit : MonoBehaviour
         {
             aggroUnit.TakeDamage(stats.damage);
             attackCooldown = stats.attackSpeed;
+
+            //aggroUnit.TakeDamage(stats.damage);
+            //attackCooldown = stats.attackSpeed;
         }
     }
 
