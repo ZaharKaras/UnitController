@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Archer
   m_EditorClassIdentifier: 
   type: 2
-  name: 
   playerPrefabs: {fileID: 6534573388650280370, guid: b0d5bd158301d1a4db32a674946b842a,
     type: 3}
   enemyPrefabs: {fileID: 2667820570553642621, guid: 6d7ef39d6208c9a4a8160feeb3538049,
     type: 3}
   baseStats:
+    name: Archer
     cost: 150
     aggroRange: 10
-    attackSpeed: 0.5
+    attackSpeed: 2
     attackRange: 5
     damage: 25
     hp: 100

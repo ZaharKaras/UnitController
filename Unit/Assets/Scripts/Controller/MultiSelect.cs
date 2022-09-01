@@ -57,7 +57,7 @@ public static class MultiSelect
     {
         Vector3 pos_1 = camera.ScreenToViewportPoint(screenPosition_1);
         Vector3 pos_2 = camera.ScreenToViewportPoint(screenPosition_2);
-
+         
         Vector3 min = Vector3.Min(pos_1, pos_2);
         Vector3 max = Vector3.Max(pos_1, pos_2);
 

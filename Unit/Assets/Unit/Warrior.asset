@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Warrior
   m_EditorClassIdentifier: 
   type: 1
-  name: 
   playerPrefabs: {fileID: 6534573388650280370, guid: 754c7d98e82c8cb409fb1ffe65aeff40,
     type: 3}
   enemyPrefabs: {fileID: 2667820570553642621, guid: ef27060cb3147324a9173c585ea01ff0,
     type: 3}
   baseStats:
+    name: Warrior
     cost: 100
     aggroRange: 10
     attackSpeed: 0.5

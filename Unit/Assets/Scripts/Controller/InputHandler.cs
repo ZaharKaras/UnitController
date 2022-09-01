@@ -31,12 +31,6 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        
-    }
-
-
     public void HandleUnitMovement()
     {
         if(Input.GetMouseButtonDown(0))

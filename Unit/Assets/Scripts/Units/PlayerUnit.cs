@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerUnit : MonoBehaviour
 {
+    [SerializeField] private Projectile projectilePrefab;
+
     private NavMeshAgent navAgent;
     public UnitStatType.Base stats;
     public GameObject unitStatDisplay;
@@ -25,7 +27,6 @@ public class PlayerUnit : MonoBehaviour
     public Transform mine;
     public bool isGathered;
 
-    private Projectile projectilePrefab;
 
     public void Start()
     {
@@ -34,7 +35,6 @@ public class PlayerUnit : MonoBehaviour
         newPosition = transform.position;
         navAgent.speed = stats.speed;
         isGathered = false;
-        projectilePrefab = transform.Find("Projectile").gameObject.GetComponent<Projectile>();
     }
 
     private void Update()
@@ -56,18 +56,13 @@ public class PlayerUnit : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isGathered)
+        if(stats.name == "Worker")
         {
-            GatherMinerals();
+            if (isGathered)
+            {
+                GatherMinerals();
+            }
         }
-
-        //if(aggroTarget != null)
-        //{
-        //    Vector3 fromTo = aggroTarget.position - transform.position;
-        //    Vector3 fromToXZ = new Vector3(fromTo.x, 0f, fromTo.z);
-
-        //    transform.rotation = Quaternion.LookRotation(fromToXZ, Vector3.up);
-        //}
     }
 
     private void LateUpdate()
@@ -100,11 +95,20 @@ public class PlayerUnit : MonoBehaviour
     {
         if (attackCooldown <= 0 && distance <= stats.aggroRange + 1)
         {
-            aggroUnit.TakeDamage(stats.damage);
-            attackCooldown = stats.attackSpeed;
-
-            //aggroUnit.TakeDamage(stats.damage);
-            //attackCooldown = stats.attackSpeed;
+            if(stats.name == "Archer")
+            {
+                var position = transform.position + transform.forward;
+                position.y = 0.5f;
+                position.z = 1;
+                var rotation = transform.rotation;
+                var projectile = Instantiate(projectilePrefab, position, rotation);
+                projectile.Fire(stats.attackSpeed, transform.forward);
+            }
+            else
+            {
+                aggroUnit.TakeDamage(stats.damage);
+                attackCooldown = stats.attackSpeed;
+            }
         }
     }
 

@@ -5,26 +5,20 @@ using UnityEngine.AI;
 
 public class Projectile : MonoBehaviour
 {
-    private Vector3 startPosition;
-    private Vector3 endPosition;
-    
+    private Rigidbody rb;
 
     private void Start()
     {
-        startPosition = transform.position;
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
     {
-        if(transform.position == endPosition)
-        {
-            transform.position = startPosition;
-        }
-
+       
     }
 
-    public void Fire(Vector3 destination)
+    public void Fire(float speed , Vector3 direction)
     {
-        endPosition = destination;
+        rb.velocity = direction * speed;
     }
 }

@@ -15,8 +15,6 @@ public class UnitStats : ScriptableObject
     [Space(15)]
     [Header("UnitStats settings")]
     public unitType type;
-
-    public new string name;
     
     public GameObject playerPrefabs;
     public GameObject enemyPrefabs;

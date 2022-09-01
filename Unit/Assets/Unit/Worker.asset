@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: Worker
   m_EditorClassIdentifier: 
   type: 0
-  name: 
-  playerPrefabs: {fileID: 6534573388650280370, guid: 99e3b033348bc994aa46b48aa1f233a2,
+  playerPrefabs: {fileID: 759169655323442771, guid: 99e3b033348bc994aa46b48aa1f233a2,
     type: 3}
   enemyPrefabs: {fileID: 2667820570553642621, guid: d1196f12280c3044b9172e2bf7213b69,
     type: 3}
   baseStats:
+    name: Worker
     cost: 50
     aggroRange: 10
     attackSpeed: 1
